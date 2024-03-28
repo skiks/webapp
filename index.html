@@ -1,45 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>IFrame Requests Display</title>
-    <style>
-      #requests-info {
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-bottom: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="requests-info">Здесь будут отображаться данные о запросах...</div>
-    <iframe
-      id="target-iframe"
-      src="https://petrovichjob.ru/respond/?CITY_ID=23395"
-      width="600"
-      height="400"
-    ></iframe>
+<html>
+<head>
+    <title>Web App Data</title>
+</head>
+<body>
+    <h1>Web App Data</h1>
+    <div id="dataContainer"></div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", (event) => {
-        const iframe = document.getElementById("target-iframe");
-
-        // Обработка сообщений от iframe
-        window.addEventListener("message", (event) => {
-          // Проверяем источник сообщения
-          if (event.origin !== "http://example.com") {
-            return; // Если источник не совпадает, игнорируем сообщение
-          }
-
-          const data = event.data;
-          const requestsInfoDiv = document.getElementById("requests-info");
-          // Предполагается, что сообщение содержит текстовую информацию о запросе
-          requestsInfoDiv.innerHTML += `<p>Запрос: ${data}</p>`;
+        window.Telegram.WebApp.getData(function(data) {
+            var dataContainer = document.getElementById("dataContainer");
+            dataContainer.innerHTML = JSON.stringify(data);
         });
-
-        // Эмуляция отправки сообщения от iframe (для реальной реализации нужен соответствующий код внутри iframe)
-        // iframe.contentWindow.postMessage("Тестовый запрос к API", "*");
-      });
     </script>
-  </body>
+</body>
 </html>
